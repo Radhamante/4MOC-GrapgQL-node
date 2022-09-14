@@ -13,18 +13,15 @@ const book = new mongoose.Schema({
         type: String,
         required: true,
     },
-    idLibrary: {
-        type: String,
-        required: true,
+    library: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Library',
     },
     name: {
         type: String,
         required: true,
     },
-    idBorrower: {
-        type: String,
-        required: false,
-    },
+    borrower: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     imageUrl: {
         type: String,
         required: false,
@@ -33,10 +30,7 @@ const book = new mongoose.Schema({
         type: [String],
         required: true,
     },
-    idHistory: {
-        type: [String],
-        required: true,
-    },
+    history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'History' }],
 });
 
 export default mongoose.model('Book', book);

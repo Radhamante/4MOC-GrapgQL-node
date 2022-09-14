@@ -29,6 +29,8 @@ import {
 import Movie from './Movie';
 import SearchResult from '../unions/SearchResult';
 import MongoBook from '../mongo/MongoBook';
+import MongoLibrary from '../mongo/MongoLibrary';
+import MongoUser from '../mongo/MongoUser';
 
 const filterInput = new GraphQLInputObjectType({
     name: 'filter',
@@ -102,17 +104,7 @@ export default new GraphQLObjectType({
             resolve: async (obj, arg) => {
                 const session = await MongoBook.startSession();
                 session.startTransaction();
-
                 try {
-                    // const fetchedBook = await MongoBook({
-                    //     title: 'book1',
-                    //     idLibrary: 'book1',
-                    //     date: 'book1',
-                    //     isbn: 'book1',
-                    //     name: 'book1',
-                    //     id: 'book1',
-                    // }).save();
-                    // console.log(fetchedBook);
                     const res = await MongoBook.find({});
                     console.log(res[0]._id.toString());
                 } catch (error) {}
@@ -180,7 +172,10 @@ export default new GraphQLObjectType({
         },
         librarys: {
             type: new GraphQLList(Library),
-            resolve: () => {
+            resolve: async () => {
+                const res: Array<any> = await MongoLibrary.find({});
+                console.log(res)
+                return res
                 return [library1, library2, library3];
             },
         },
@@ -192,7 +187,10 @@ export default new GraphQLObjectType({
         },
         users: {
             type: new GraphQLList(User),
-            resolve: () => {
+            resolve: async () => {
+                const res: Array<any> = await MongoUser.find({});
+                console.log(res)
+                return res
                 return [user1, user2, user3];
             },
         },

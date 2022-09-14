@@ -6,6 +6,8 @@ import {
     GraphQLString,
 } from 'graphql';
 import userGender from '../enum/userGender';
+import MongoBook from '../mongo/MongoBook';
+import MongoHistory from '../mongo/MongoHistory';
 import Book from './Book';
 import History from './History';
 
@@ -17,10 +19,27 @@ export default new GraphQLObjectType({
             name: { type: GraphQLString },
             email: { type: GraphQLString },
             password: { type: GraphQLString },
-            books_borrowed: { type: new GraphQLList(Book) },
+            booksBorrowed: {
+                type: new GraphQLList(Book),
+                resolve: async (obj) => {
+                    const book = await MongoBook.find({
+                        borrower: obj._id,
+                    });
+                    return book
+                },
+            },
             isAdmin: { type: GraphQLBoolean },
             gender: { type: userGender },
-            historys: { type: new GraphQLList(History) },
+            historys: {
+                type: new GraphQLList(History),
+                resolve: async (obj) => {
+                    const histos = await MongoHistory.find({
+                        borrower: obj._id,
+                    });
+                    console.log(histos);
+                    return histos;
+                },
+            },
         };
     },
 });

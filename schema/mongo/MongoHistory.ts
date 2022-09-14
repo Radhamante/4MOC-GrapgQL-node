@@ -1,22 +1,17 @@
 import mongoose from 'mongoose';
 
 const history = new mongoose.Schema({
-    idBook: {
-        type: String,
-        required: true,
-    },
-    idBorrower: {
-        type: String,
-        required: true,
-    },
+    book: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+    borrower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     startDate: {
-        type: String,
+        type: Date,
+        default: Date.now(),
         required: true,
     },
     endDate: {
-        type: String,
+        type: Date,
         required: false,
     },
 });
 
-module.exports = mongoose.model('History', history);
+export default mongoose.model('History', history);

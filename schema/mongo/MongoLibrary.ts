@@ -5,14 +5,12 @@ const library = new mongoose.Schema({
         type: String,
         required: true,
     },
-    idAdress: {
-        type: String,
+    address: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
         required: true,
     },
-    idBooks: {
-        type: [String],
-        required: true,
-    },
+    books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
 });
 
-module.exports = mongoose.model('Library', library);
+export default mongoose.model('Library', library);

@@ -13,10 +13,9 @@ const user = new mongoose.Schema({
         type: String,
         required: false,
     },
-    idBooksBorrowed: {
-        type: [String],
-        required: true,
-    },
+    booksBorrowed: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'book', required: true },
+    ],
     isAdmin: {
         type: Boolean,
         required: true,
@@ -25,10 +24,13 @@ const user = new mongoose.Schema({
         type: String,
         required: true,
     },
-    idHistorys: {
-        type: [String],
-        required: true,
-    },
+    historys: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'History',
+            required: true,
+        },
+    ],
 });
 
-module.exports = mongoose.model('User', user);
+export default mongoose.model('User', user);

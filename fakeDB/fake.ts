@@ -79,7 +79,7 @@ export const user1 = {
     name: "user1",
     email: "user1",
     password: "user1",
-    books_borrowed: [book1],
+    booksBorrowed: [book1],
     isAdmin: true,
     gender: "MALE",
     historys: [{}]
@@ -91,7 +91,7 @@ export const user2 = {
     name: "user2",
     email: "user2",
     password: "user2",
-    books_borrowed: [book2],
+    booksBorrowed: [book2],
     isAdmin: true,
     gender: "MALE",
     historys: [{}]
@@ -103,7 +103,7 @@ export const user3 = {
     name: "user3",
     email: "user3",
     password: "user3",
-    books_borrowed: [],
+    booksBorrowed: [],
     isAdmin: true,
     gender: "MALE",
     historys: [{}]

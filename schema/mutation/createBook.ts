@@ -10,6 +10,7 @@ import { book1 } from '../../fakeDB/fake';
 import bookGenre from '../enum/bookGenre';
 import Library from '../types/Library';
 import MongoBook from '../mongo/MongoBook';
+import MongoLibrary from '../mongo/MongoLibrary';
 
 const createBookMutation = mutationWithClientMutationId({
     name: 'createBook',
@@ -36,20 +37,27 @@ const createBookMutation = mutationWithClientMutationId({
         const session = await MongoBook.startSession();
         session.startTransaction();
         try {
-            const fetchedBook = await new MongoBook({
-                title: input.title,
-                idLibrary: input.idLibrary,
-                date: input.date,
-                isbn: input.isbn,
-                name: 'input.name',
-            }).save();
-            console.log(fetchedBook);
+            const library = await MongoLibrary.findById(
+                input.idLibrary,
+                'address'
+            );
+            console.log('--------- library --------');
+            console.log(library);
+            const createdBook = await MongoBook.create({
+                ...input,
+                borrower: null,
+                library: library,
+            });
+            console.log('-------- createdBook --------');
+            console.log(createdBook);
+
+            return createdBook;
         } catch (error) {
             console.log(error);
         }
         await session.commitTransaction();
         session.endSession();
-        return book1;
+        return null;
     },
 });
 
