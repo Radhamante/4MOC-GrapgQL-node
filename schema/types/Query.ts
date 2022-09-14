@@ -32,7 +32,7 @@ export default new GraphQLObjectType({
         books: {
             type: new GraphQLList(Book),
             args: {
-                first: {
+                start: {
                     type: GraphQLInt,
                     defaultValue: 0,
                     description: 'Number of the first element',
@@ -60,9 +60,9 @@ export default new GraphQLObjectType({
                             }
                             return bookList;
                         }, [])
-                        .slice(arg.first, arg.count);
+                        .slice(arg.start, arg.count < 100 ? arg.count : 100);
                 }
-                return [book1, book2, book3].slice(arg.first, arg.count);
+                return [book1, book2, book3].slice(arg.start, arg.count < 100 ? arg.count : 100);
             },
         },
         book: {
