@@ -9,9 +9,9 @@ export default new GraphQLObjectType({
     name: 'Address',
     fields: () => {
         return {
-            id: { type: GraphQLID! },
-            long: { type: GraphQLFloat! },
-            lat: { type: GraphQLFloat! },
+            id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
+            long: { type: GraphQLFloat },
+            lat: { type: GraphQLFloat },
             name: { type: GraphQLString },
         };
     },

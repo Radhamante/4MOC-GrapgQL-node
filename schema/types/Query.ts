@@ -5,6 +5,7 @@ import {
     GraphQLInt,
     GraphQLString,
     GraphQLInputObjectType,
+    GraphQLUnionType,
 } from 'graphql';
 import Address from './Address';
 import Book from './Book';
@@ -25,9 +26,12 @@ import {
     user2,
     user3,
 } from '../../fakeDB/fake';
+import Movie from './Movie';
+import SearchResult from '../unions/SearchResult';
+import MongoBook from '../mongo/MongoBook';
 
 const filterInput = new GraphQLInputObjectType({
-    name: "filter",
+    name: 'filter',
     fields: {
         start: {
             type: GraphQLInt,
@@ -39,8 +43,8 @@ const filterInput = new GraphQLInputObjectType({
             defaultValue: 20,
             description: 'Number of element needed after the first one',
         },
-    }
-})
+    },
+});
 
 export default new GraphQLObjectType({
     name: 'Query',
@@ -50,17 +54,22 @@ export default new GraphQLObjectType({
             args: {
                 filter: {
                     type: filterInput,
-                    description: "Filter values",
+                    description: 'Filter values',
+                    defaultValue: {
+                        start: 0,
+                        count: 20,
+                    },
                 },
                 query: {
                     type: GraphQLString,
                     description: 'search query (work on title, author)',
                 },
             },
-            resolve: (obj, arg) => {
+            resolve: async (obj, arg) => {
+                const res: Array<any> = await MongoBook.find({});
                 if (arg.query) {
                     // Recherche dans le tableau, les valeur où le title ou le author egale a la valeur de query
-                    return [book1, book2, book3]
+                    return res
                         .reduce<any>((bookList, book) => {
                             if (
                                 book.title.includes(arg.query) ||
@@ -70,9 +79,15 @@ export default new GraphQLObjectType({
                             }
                             return bookList;
                         }, [])
-                        .slice(arg.filter.start, arg.filter.count < 100 ? arg.filter.count : 100);
+                        .slice(
+                            arg.filter.start,
+                            arg.filter.count < 100 ? arg.filter.count : 100
+                        );
                 }
-                return [book1, book2, book3].slice(arg.filter.start, arg.filter.count < 100 ? arg.filter.count : 100);
+                return res.slice(
+                    arg.filter.start,
+                    arg.filter.count < 100 ? arg.filter.count : 100
+                );
             },
         },
         book: {
@@ -84,8 +99,83 @@ export default new GraphQLObjectType({
                     description: 'book ID',
                 },
             },
-            resolve: (obj, arg) => {
+            resolve: async (obj, arg) => {
+                const session = await MongoBook.startSession();
+                session.startTransaction();
+
+                try {
+                    // const fetchedBook = await MongoBook({
+                    //     title: 'book1',
+                    //     idLibrary: 'book1',
+                    //     date: 'book1',
+                    //     isbn: 'book1',
+                    //     name: 'book1',
+                    //     id: 'book1',
+                    // }).save();
+                    // console.log(fetchedBook);
+                    const res = await MongoBook.find({});
+                    console.log(res[0]._id.toString());
+                } catch (error) {}
+                await session.commitTransaction();
+                session.endSession();
                 return [book1, book2, book3].find((b) => b.id == arg.id);
+            },
+        },
+        search: {
+            type: SearchResult,
+            description: 'search for anything',
+            args: {
+                filter: {
+                    type: filterInput,
+                    description: 'Filter values',
+                },
+                query: {
+                    type: GraphQLString,
+                    description: 'search query (work on title, author)',
+                },
+            },
+            resolve: (obj, arg) => {
+                const bookList = [book1, book2, book3];
+                const libraryList = [library1, library2, library3];
+                const userList = [user1, user2, user3];
+                const reduced = <any>[];
+                reduced.concat(
+                    bookList.reduce<any>((list, element) => {
+                        if (
+                            element.title.includes(arg.query) ||
+                            element.author.includes(arg.query)
+                        ) {
+                            list.push(element);
+                        }
+                        return list;
+                    }, [])
+                );
+                reduced.concat(
+                    userList.reduce<any>((list, element) => {
+                        if (
+                            element.name.includes(arg.query) ||
+                            element.email.includes(arg.query)
+                        ) {
+                            list.push(element);
+                        }
+                        return list;
+                    }, [])
+                );
+                reduced.concat(
+                    libraryList.reduce<any>((list, element) => {
+                        if (element.name.includes(arg.query)) {
+                            list.push(element);
+                        }
+                        return list;
+                    }, [])
+                );
+                console.log(reduced);
+                if (arg.filter) {
+                    reduced.slice(
+                        arg.filter.start,
+                        arg.filter.count < 100 ? arg.filter.count : 100
+                    );
+                }
             },
         },
         librarys: {

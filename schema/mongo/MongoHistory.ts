@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const history = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-    },
     idBook: {
         type: String,
         required: true,

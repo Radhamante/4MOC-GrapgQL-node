@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const adress = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-    },
     long: {
         type: String,
         required: true,

@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const book = new mongoose.Schema({
-    isbn: {
-        type: String,
-        required: true,
-    },
     title: {
         type: String,
         required: true,

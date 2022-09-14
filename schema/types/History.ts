@@ -6,10 +6,10 @@ export default new GraphQLObjectType({
         const Book = require('./Book').default;
         const User = require('./User').default;
         return {
-            id: { type: GraphQLID! },
-            book: { type: Book! },
-            borrower: { type: User! },
-            startDate: { type: GraphQLString! },
+            id: { type: GraphQLID, resolve: (obj) => obj._id.toString()},
+            book: { type: Book },
+            borrower: { type: User },
+            startDate: { type: GraphQLString },
             endDate: { type: GraphQLString },
         };
     },

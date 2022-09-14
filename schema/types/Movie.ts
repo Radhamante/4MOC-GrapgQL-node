@@ -5,23 +5,24 @@ import {
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
-import bookGenre from '../enum/bookGenre';
+import movieGenre from '../enum/movieGenre';
+import Borrowable from '../interfaces/Borrowable';
 
 export default new GraphQLObjectType({
-    name: 'Book',
+    name: 'Movie',
+    interfaces: () => [Borrowable],
     fields: () => {
         const User = require('./User').default;
         const Library = require('./Library').default;
         const History = require('./History').default;
         return {
             id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
-            isbn: { type: GraphQLString },
             title: { type: GraphQLString },
             author: { type: GraphQLString },
             date: { type: GraphQLString },
             library: { type: Library },
             imageUrl: { type: GraphQLString },
-            genre: { type: new GraphQLList(bookGenre) },
+            genre: { type: new GraphQLList(movieGenre) },
             // From Borrowable
             userCanBorrow: {
                 type: GraphQLBoolean,

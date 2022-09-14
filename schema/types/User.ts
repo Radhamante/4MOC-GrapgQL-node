@@ -13,14 +13,14 @@ export default new GraphQLObjectType({
     name: 'User',
     fields: () => {
         return {
-            id: { type: GraphQLID! },
+            id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
             name: { type: GraphQLString },
             email: { type: GraphQLString },
             password: { type: GraphQLString },
-            books_borrowed: { type: new GraphQLList(Book)! },
-            isAdmin: { type: GraphQLBoolean! },
-            gender: { type: userGender! },
-            historys: { type: new GraphQLList(History)! },
+            books_borrowed: { type: new GraphQLList(Book) },
+            isAdmin: { type: GraphQLBoolean },
+            gender: { type: userGender },
+            historys: { type: new GraphQLList(History) },
         };
     },
 });
