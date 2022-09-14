@@ -28,7 +28,6 @@ import {
 
 const filterInput = new GraphQLInputObjectType({
     name: "filter",
-    description: "Filter values",
     fields: {
         start: {
             type: GraphQLInt,
@@ -50,7 +49,8 @@ export default new GraphQLObjectType({
             type: new GraphQLList(Book),
             args: {
                 filter: {
-                    type: filterInput
+                    type: filterInput,
+                    description: "Filter values",
                 },
                 query: {
                     type: GraphQLString,
@@ -77,6 +77,7 @@ export default new GraphQLObjectType({
         },
         book: {
             type: Book,
+            description: "Get one book by it's ID",
             args: {
                 id: {
                     type: GraphQLID,
