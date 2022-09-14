@@ -1,4 +1,9 @@
-import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+    GraphQLID,
+    GraphQLList,
+    GraphQLObjectType,
+    GraphQLString,
+} from 'graphql';
 import Address from './Address';
 import Book from './Book';
 

@@ -9,9 +9,9 @@ import bookGenre from '../enum/bookGenre';
 export default new GraphQLObjectType({
     name: 'Book',
     fields: () => {
-        const User = require("./User").default
-        const Library = require("./Library").default
-        const History = require("./History").default
+        const User = require('./User').default;
+        const Library = require('./Library').default;
+        const History = require('./History').default;
         return {
             id: { type: GraphQLID! },
             isbn: { type: GraphQLString! },

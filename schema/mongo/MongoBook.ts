@@ -1,54 +1,50 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose';
 
-const book = new mongoose.Schema(
-  {
+const book = new mongoose.Schema({
     id: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    isbn : {
-      type: String,
-      required: true,
+    isbn: {
+        type: String,
+        required: true,
     },
     title: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     author: {
-      type: String,
-      required: false,
-      },
-    date : {
-      type: String,
-      required: true,
+        type: String,
+        required: false,
     },
-
+    date: {
+        type: String,
+        required: true,
+    },
     idLibrary: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     name: {
         type: String,
         required: true,
-      },
-    idBorrower : {
-      type: String,
-      required: false,
     },
-
+    idBorrower: {
+        type: String,
+        required: false,
+    },
     imageUrl: {
-      type: String,
-      required: false,
+        type: String,
+        required: false,
     },
     genre: {
         type: [String],
         required: true,
-      },
-    history: {
+    },
+    idHistory: {
         type: [String],
         required: true,
-      },
-  }
-)
+    },
+});
 
-module.exports = mongoose.model("Book", book)
+module.exports = mongoose.model('Book', book);
