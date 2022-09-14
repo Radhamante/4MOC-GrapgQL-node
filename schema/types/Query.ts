@@ -4,6 +4,7 @@ import {
     GraphQLID,
     GraphQLInt,
     GraphQLString,
+    GraphQLInputObjectType,
 } from 'graphql';
 import Address from './Address';
 import Book from './Book';
@@ -24,7 +25,23 @@ import {
     user2,
     user3,
 } from '../../fakeDB/fake';
-import { AnyArray } from 'mongoose';
+
+const filterInput = new GraphQLInputObjectType({
+    name: "filter",
+    description: "Filter values",
+    fields: {
+        start: {
+            type: GraphQLInt,
+            defaultValue: 0,
+            description: 'Number of the first element',
+        },
+        count: {
+            type: GraphQLInt,
+            defaultValue: 20,
+            description: 'Number of element needed after the first one',
+        },
+    }
+})
 
 export default new GraphQLObjectType({
     name: 'Query',
@@ -32,15 +49,8 @@ export default new GraphQLObjectType({
         books: {
             type: new GraphQLList(Book),
             args: {
-                start: {
-                    type: GraphQLInt,
-                    defaultValue: 0,
-                    description: 'Number of the first element',
-                },
-                count: {
-                    type: GraphQLInt,
-                    defaultValue: 20,
-                    description: 'Number of element needed after the first one',
+                filter: {
+                    type: filterInput
                 },
                 query: {
                     type: GraphQLString,
@@ -60,9 +70,9 @@ export default new GraphQLObjectType({
                             }
                             return bookList;
                         }, [])
-                        .slice(arg.start, arg.count < 100 ? arg.count : 100);
+                        .slice(arg.filter.start, arg.filter.count < 100 ? arg.filter.count : 100);
                 }
-                return [book1, book2, book3].slice(arg.start, arg.count < 100 ? arg.count : 100);
+                return [book1, book2, book3].slice(arg.filter.start, arg.filter.count < 100 ? arg.filter.count : 100);
             },
         },
         book: {
