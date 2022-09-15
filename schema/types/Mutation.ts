@@ -12,6 +12,9 @@ import updateUserMutation from '../mutation/users/updateUser';
 import deleteUserMutation from '../mutation/users/deleteUser';
 import registerMutation from '../mutation/auth/register';
 import loginMutation from '../mutation/auth/login';
+import updateMovieMutation from '../mutation/movies/updateMovie';
+import createMovieMutation from '../mutation/movies/createMovie';
+import deleteMovieMutation from '../mutation/movies/deleteMovie';
 
 export default new GraphQLObjectType({
     name: 'Mutation',
@@ -27,6 +30,10 @@ export default new GraphQLObjectType({
         createUser: createUserMutation,
         updateUser: updateUserMutation,
         deleteUser: deleteUserMutation,
+
+        createMovie: createMovieMutation,
+        updateMovie: updateMovieMutation,
+        deleteMovie: deleteMovieMutation,
 
         borrow: borrowMutation,
         unborrow: unborrowMutation,

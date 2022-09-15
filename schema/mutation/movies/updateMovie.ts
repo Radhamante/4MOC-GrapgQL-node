@@ -5,19 +5,19 @@ import MongoLibrary from '../../mongo/MongoLibrary';
 import GraphQLDate from '../../scalars/date';
 import Movie from '../../types/Movie';
 import MongoMovie from '../../mongo/MongoMovie';
+import movieGenre from '../../enum/movieGenre';
 
 const updateMovieMutation = mutationWithClientMutationId({
     name: 'updateMovie',
     description: 'update a movie',
     inputFields: {
         id: { type: new GraphQLNonNull(GraphQLString) },
-        isbn: { type: GraphQLString },
         title: { type: GraphQLString },
         author: { type: GraphQLString },
         date: { type: GraphQLDate },
         idLibrary: { type: GraphQLString },
         imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLList(new GraphQLList(bookGenre))! },
+        genre: { type: new GraphQLList(new GraphQLList(movieGenre)) },
     },
     outputFields: {
         movie: { type: Movie },

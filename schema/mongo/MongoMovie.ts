@@ -17,10 +17,6 @@ const movie = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Library',
     },
-    name: {
-        type: String,
-        required: true,
-    },
     borrower: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     imageUrl: {
         type: String,
