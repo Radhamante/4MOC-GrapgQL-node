@@ -4,7 +4,8 @@ import Library from '../types/Library';
 import Movie from '../types/Movie';
 import User from '../types/User';
 
-export default new GraphQLUnionType({
+const searchResultUnion = new GraphQLUnionType({
     name: 'Auth',
     types: [Book, Movie, Library, User],
 });
+export default searchResultUnion

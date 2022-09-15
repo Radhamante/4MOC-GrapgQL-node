@@ -1,6 +1,12 @@
-import { GraphQLID, GraphQLObjectType, GraphQLString } from 'graphql';
+import {
+    GraphQLID,
+    GraphQLNonNull,
+    GraphQLObjectType,
+    GraphQLString,
+} from 'graphql';
 import MongoBook from '../mongo/MongoBook';
 import MongoUser from '../mongo/MongoUser';
+import GraphQLDate from '../scalars/date';
 
 export default new GraphQLObjectType({
     name: 'History',
@@ -8,21 +14,24 @@ export default new GraphQLObjectType({
         const Book = require('./Book').default;
         const User = require('./User').default;
         return {
-            id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
+            id: {
+                type: new GraphQLNonNull(GraphQLID),
+                resolve: (obj) => obj._id.toString(),
+            },
             book: {
-                type: Book,
+                type: new GraphQLNonNull(Book),
                 resolve: async (obj) => {
                     return await MongoBook.findById(obj.book).exec();
                 },
             },
             borrower: {
-                type: User,
+                type: new GraphQLNonNull(User),
                 resolve: async (obj) => {
                     return await MongoUser.findById(obj.borrower).exec();
                 },
             },
-            startDate: { type: GraphQLString },
-            endDate: { type: GraphQLString },
+            startDate: { type: new GraphQLNonNull(GraphQLDate) },
+            endDate: { type: GraphQLDate },
         };
     },
 });

@@ -1,0 +1,1 @@
+export const JWT_SECRET_KEY = "eduMJ8h+wXJcblfRSS2F9J8puHKHmXL/90jIZhLoGfuQ3z6QqzNzFbgB6DNy88EUzak1aCNqiN8LOQNrccZkO8StzmcpS+k5l4lZysiiIzwholuX2PD8ezU5+Kf6u9UjTbz7np/iHNKZ9ohHnYah2nIYVU/uo3JROh0BwA4+YWw="

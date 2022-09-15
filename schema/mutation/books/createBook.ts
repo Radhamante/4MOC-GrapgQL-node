@@ -6,41 +6,36 @@ import {
     GraphQLString,
 } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
-import { book1 } from '../../fakeDB/fake';
-import bookGenre from '../enum/bookGenre';
-import Library from '../types/Library';
-import MongoBook from '../mongo/MongoBook';
-import MongoLibrary from '../mongo/MongoLibrary';
+import bookGenre from '../../enum/bookGenre';
+import MongoBook from '../../mongo/MongoBook';
+import MongoLibrary from '../../mongo/MongoLibrary';
+import Book from '../../types/Book';
+import GraphQLDate from '../../scalars/date';
+import MongoUser from '../../mongo/MongoUser';
+import MongoAdress from '../../mongo/MongoAdress';
+import MongoHistory from '../../mongo/MongoHistory';
+import MongoMovie from '../../mongo/MongoMovie';
 
 const createBookMutation = mutationWithClientMutationId({
     name: 'createBook',
     description: 'Create a book',
     inputFields: {
-        isbn: { type: GraphQLString! },
-        title: { type: GraphQLString! },
+        isbn: { type: new GraphQLNonNull(GraphQLString) },
+        title: { type: new GraphQLNonNull(GraphQLString) },
         author: { type: GraphQLString },
-        date: { type: GraphQLString! },
-        idLibrary: { type: GraphQLString },
+        date: { type: new GraphQLNonNull(GraphQLDate) },
+        idLibrary: { type: new GraphQLNonNull(GraphQLString) },
         imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLList(bookGenre)! },
+        genre: { type: new GraphQLNonNull(new GraphQLList(bookGenre)) },
     },
     outputFields: {
-        isbn: { type: GraphQLString! },
-        title: { type: GraphQLString! },
-        author: { type: GraphQLString },
-        date: { type: GraphQLString! },
-        library: { type: Library },
-        imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLList(bookGenre)! },
+        book: { type: Book },
     },
     mutateAndGetPayload: async (input) => {
         const session = await MongoBook.startSession();
         session.startTransaction();
         try {
-            const library = await MongoLibrary.findById(
-                input.idLibrary,
-                'address'
-            );
+            const library = await MongoLibrary.findById(input.idLibrary);
             console.log('--------- library --------');
             console.log(library);
             const createdBook = await MongoBook.create({
@@ -50,8 +45,10 @@ const createBookMutation = mutationWithClientMutationId({
             });
             console.log('-------- createdBook --------');
             console.log(createdBook);
-
-            return createdBook;
+            await MongoLibrary.findByIdAndUpdate(input.idLibrary, {
+                $push: { books: createdBook },
+            });
+            return { book: createdBook };
         } catch (error) {
             console.log(error);
         }

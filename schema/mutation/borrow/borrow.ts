@@ -1,19 +1,19 @@
-import { GraphQLString } from 'graphql';
+import { GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
-import MongoBook from '../mongo/MongoBook';
-import MongoHistory from '../mongo/MongoHistory';
-import MongoUser from '../mongo/MongoUser';
-import History from '../types/History';
+import MongoBook from '../../mongo/MongoBook';
+import MongoHistory from '../../mongo/MongoHistory';
+import MongoUser from '../../mongo/MongoUser';
+import History from '../../types/History';
 
 const borrowMutation = mutationWithClientMutationId({
     name: 'borrow',
     description: 'borrow a book by a user',
     inputFields: {
-        book: { type: GraphQLString },
-        user: { type: GraphQLString },
+        book: { type: new GraphQLNonNull(GraphQLString) },
+        user: { type: new GraphQLNonNull(GraphQLString) },
     },
     outputFields: {
-        history: { type: History },
+        history: { type: new GraphQLNonNull(History) },
     },
     mutateAndGetPayload: async (input) => {
         const session = await MongoUser.startSession();
@@ -23,20 +23,20 @@ const borrowMutation = mutationWithClientMutationId({
                 book: input.book,
                 borrower: input.user,
                 startDate: Date.now(),
-                endDate: null
+                endDate: null,
             });
             console.log(createdHistory);
             const user = await MongoUser.findByIdAndUpdate(input.user, {
                 $push: { booksBorrowed: input.book },
-            }).exec()
-            console.log(user)
+            }).exec();
+            console.log(user);
             const book = await MongoBook.findByIdAndUpdate(input.book, {
                 $set: { borrower: input.user },
             }).exec();
-            console.log(book)
+            console.log(book);
             return { history: createdHistory };
         } catch (error) {
-            console.log("########### error ##########");
+            console.log('########### error ##########');
             console.log(error);
         }
         await session.commitTransaction();

@@ -1,4 +1,9 @@
-import { GraphQLBoolean, GraphQLInterfaceType, GraphQLList } from 'graphql';
+import {
+    GraphQLBoolean,
+    GraphQLInterfaceType,
+    GraphQLList,
+    GraphQLNonNull,
+} from 'graphql';
 import User from '../types/User';
 import History from '../types/History';
 
@@ -6,15 +11,15 @@ export default new GraphQLInterfaceType({
     name: 'Borrowable',
     fields: {
         userCanBorrow: {
-            type: GraphQLBoolean,
+            type: new GraphQLNonNull(GraphQLBoolean),
             description: 'User have write to borrow this',
         },
         borrower: {
-            description: 'User that currently borrow this',
             type: User,
+            description: 'User that currently borrow this',
         },
         history: {
-            type: new GraphQLList(History),
+            type: new GraphQLNonNull(new GraphQLList(History)),
             description: 'List of all previous borrows',
         },
     },

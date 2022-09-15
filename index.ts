@@ -1,28 +1,45 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import schema from './schema';
-import defaultQuery from './queries/defaultQuery';
-
 const mongoose = require('mongoose');
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET_KEY } from './env';
+import MongoUser from './schema/mongo/MongoUser';
 
-const Schema = mongoose.Schema;
+const buildContext = async (req: any) => {
+    const headersAuthorization = req.headers.authorization
+    let context = {
+        user: {},
+        logged: false
+    }
+    if(headersAuthorization) {
+        try {
+            const token: any = jwt.verify(headersAuthorization, JWT_SECRET_KEY);
+            const user = await MongoUser.find({email:(token.email)}).exec()
+            context.user = user
+            context.logged = true
+        } catch (e) {
+            return null;
+        }
+    }
+    return context
+}
 
+const DefaultQuery = `query DefaultQuery {}`;
 var app = express();
 app.use(
-    '/graphql',
-    graphqlHTTP({
+    '/graphql', 
+    graphqlHTTP(async (req) => ({
         schema: schema,
+        context: await buildContext(req),
         graphiql: {
-            defaultQuery,
+            defaultQuery: DefaultQuery,
         },
-    })
+    }))
 );
-app.use('/', (_, res) => {
-    res.redirect('/graphql');
-});
 
-const MONGO_USER = "admin"
-const MONGO_PASSWORD = "admin"
+const MONGO_USER = 'admin';
+const MONGO_PASSWORD = 'admin';
 const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@cluster0.wsixukh.mongodb.net/?retryWrites=true&w=majority`;
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose

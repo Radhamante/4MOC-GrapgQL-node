@@ -1,6 +1,7 @@
 import {
     GraphQLID,
     GraphQLList,
+    GraphQLNonNull,
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
@@ -12,10 +13,13 @@ export default new GraphQLObjectType({
     name: 'Library',
     fields: () => {
         return {
-            id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
-            name: { type: GraphQLString },
+            id: {
+                type: new GraphQLNonNull(GraphQLID),
+                resolve: (obj) => obj._id.toString(),
+            },
+            name: { type: new GraphQLNonNull(GraphQLString) },
             address: {
-                type: Address,
+                type: new GraphQLNonNull(Address),
                 resolve: async (obj) => {
                     const address = await MongoAdress.findById(obj._id).exec();
                     return address;

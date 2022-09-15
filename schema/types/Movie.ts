@@ -2,6 +2,7 @@ import {
     GraphQLBoolean,
     GraphQLID,
     GraphQLList,
+    GraphQLNonNull,
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
@@ -16,24 +17,27 @@ export default new GraphQLObjectType({
         const Library = require('./Library').default;
         const History = require('./History').default;
         return {
-            id: { type: GraphQLID, resolve: (obj) => obj._id.toString() },
-            title: { type: GraphQLString },
+            id: {
+                type: new GraphQLNonNull(GraphQLID),
+                resolve: (obj) => obj._id.toString(),
+            },
+            title: { type: new GraphQLNonNull(GraphQLString) },
             author: { type: GraphQLString },
-            date: { type: GraphQLString },
-            library: { type: Library },
+            date: { type: new GraphQLNonNull(GraphQLString) },
+            library: { type: new GraphQLNonNull(Library) },
             imageUrl: { type: GraphQLString },
-            genre: { type: new GraphQLList(movieGenre) },
+            genre: { type: new GraphQLNonNull(new GraphQLList(movieGenre)) },
             // From Borrowable
             userCanBorrow: {
-                type: GraphQLBoolean,
+                type: new GraphQLNonNull(GraphQLBoolean),
                 description: 'User have write to borrow this',
             },
             borrower: {
-                description: 'User that currently borrow this',
                 type: User,
+                description: 'User that currently borrow this',
             },
             history: {
-                type: new GraphQLList(History),
+                type: new GraphQLNonNull(new GraphQLList(History)),
                 description: 'List of all previous borrows',
             },
         };

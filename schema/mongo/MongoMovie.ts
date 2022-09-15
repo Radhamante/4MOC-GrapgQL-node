@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const book = new mongoose.Schema({
+const movie = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -33,4 +33,4 @@ const book = new mongoose.Schema({
     history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'History' }],
 });
 
-export default mongoose.model('Book', book);
+export default mongoose.model('Movie', movie);
