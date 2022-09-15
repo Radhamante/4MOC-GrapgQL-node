@@ -6,10 +6,10 @@ import MongoUser from '../mongo/MongoUser';
 import searchResultUnion from '../unions/SearchResult';
 
 const searchQuery = {
-    type: new GraphQLList(searchResultUnion),
+    type: new GraphQLNonNull(new GraphQLList(searchResultUnion)),
     description: 'search for anything',
     args: {
-        filter: filterArg,
+        filter: (filterArg),
         query: {
             type: new GraphQLNonNull(GraphQLString),
             description: 'Query string',
@@ -29,8 +29,8 @@ const searchQuery = {
             name: { $regex: arg.query, $options: 'i' },
         });
 
-        return resLibrary
-            .concat(resBook)
+        return resBook
+            .concat(resLibrary)
             .concat(resUser)
             .slice(arg.filter.start, arg.filter.end)
             .slice(arg.filter.start, arg.filter.count);
