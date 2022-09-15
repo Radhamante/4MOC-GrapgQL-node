@@ -5,7 +5,20 @@ import Movie from '../types/Movie';
 import User from '../types/User';
 
 const searchResultUnion = new GraphQLUnionType({
-    name: 'Auth',
-    types: [Book, Movie, Library, User],
+    name: 'SearchResultUnion',
+    types: () => [Book, Movie, Library, User],
+    resolveType: (obj: any) => {
+        // if (obj.borrower) {
+        //   return Book;
+        // }
+        // if (obj.books) {
+        //   return Library;
+        // }
+        // if (obj.isAdmin) {
+        //   return User;
+        // }
+        // return Movie;
+        return obj
+    }
 });
 export default searchResultUnion
