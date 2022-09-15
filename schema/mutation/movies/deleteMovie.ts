@@ -12,7 +12,13 @@ const deleteMovieMutation = mutationWithClientMutationId({
     outputFields: {
         movie: { type: Movie },
     },
-    mutateAndGetPayload: async (input) => {
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
+        if (!context.user.isAdmin) {
+            return null
+        }
         const session = await MongoMovie.startSession();
         session.startTransaction();
         try {

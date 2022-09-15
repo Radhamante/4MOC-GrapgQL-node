@@ -6,7 +6,13 @@ const updateLibraryMutation = mutationWithClientMutationId({
     description: 'update a library',
     inputFields: {},
     outputFields: {},
-    mutateAndGetPayload: async (input) => {
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
+        if (!context.user.isAdmin) {
+            return null
+        }
         const session = await MongoLibrary.startSession();
         session.startTransaction();
         try {

@@ -6,6 +6,8 @@ import {
     GraphQLString,
 } from 'graphql';
 import MongoAdress from '../mongo/MongoAdress';
+import MongoBook from '../mongo/MongoBook';
+import booksQuery from '../queries/books';
 import Address from './Address';
 import Book from './Book';
 
@@ -25,7 +27,7 @@ export default new GraphQLObjectType({
                     return address;
                 },
             },
-            books: { type: new GraphQLList(Book) },
+            books: booksQuery,
         };
     },
 });

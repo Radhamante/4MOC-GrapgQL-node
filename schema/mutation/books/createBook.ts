@@ -31,7 +31,13 @@ const createBookMutation = mutationWithClientMutationId({
     outputFields: {
         book: { type: Book },
     },
-    mutateAndGetPayload: async (input) => {
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
+        if (!context.user.isAdmin) {
+            return null
+        }
         const session = await MongoBook.startSession();
         session.startTransaction();
         try {

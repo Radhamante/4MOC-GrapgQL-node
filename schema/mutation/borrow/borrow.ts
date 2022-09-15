@@ -15,7 +15,10 @@ const borrowMutation = mutationWithClientMutationId({
     outputFields: {
         history: { type: new GraphQLNonNull(History) },
     },
-    mutateAndGetPayload: async (input) => {
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error('User not logged');
+        }
         const session = await MongoUser.startSession();
         session.startTransaction();
         try {

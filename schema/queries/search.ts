@@ -22,7 +22,10 @@ const searchQuery = {
             description: "Query string"
         }
     },
-    resolve: async (obj: any, arg: any) => {
+    resolve: async (obj: any, arg: any, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
         const resLibrary: Array<any> = await MongoLibrary.find({name: arg.query}).exec()
         const resBook: Array<any> = await MongoBook.find({title: arg.query}).exec()
         const resUser: Array<any> = await MongoUser.find({name: arg.query}).exec()

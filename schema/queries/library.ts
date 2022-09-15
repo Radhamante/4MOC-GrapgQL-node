@@ -15,7 +15,10 @@ const libraryQuery = {
             },
         },
     },
-    resolve: async (obj: any, arg: any) => {
+    resolve: async (obj: any, arg: any, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
         const res: Array<any> = await MongoLibrary.find({})
         .skip(arg.filter.start)
         .limit(arg.filter.count < 100 ? arg.filter.count : 100);

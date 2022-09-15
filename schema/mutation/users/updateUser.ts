@@ -6,7 +6,13 @@ const updateUserMutation = mutationWithClientMutationId({
     description: 'update a user',
     inputFields: {},
     outputFields: {},
-    mutateAndGetPayload: async (input) => {
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
+        if (!context.user.isAdmin) {
+            return null
+        }
         const session = await MongoUser.startSession();
         session.startTransaction();
         try {

@@ -4,11 +4,12 @@ import MongoUser from '../../mongo/MongoUser';
 const unborrowMutation = mutationWithClientMutationId({
     name: 'unborrow',
     description: 'unborrow a book by a user',
-    inputFields: {
-    },
-    outputFields: {
-    },
-    mutateAndGetPayload: async (input) => {
+    inputFields: {},
+    outputFields: {},
+    mutateAndGetPayload: async (input, context: any) => {
+        if (!context.logged) {
+            throw Error('User not logged');
+        }
         const session = await MongoUser.startSession();
         session.startTransaction();
         try {
