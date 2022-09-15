@@ -45,7 +45,7 @@ export default new GraphQLObjectType({
                 } catch (error) {}
                 await session.commitTransaction();
                 session.endSession();
-                return null
+                return null;
             },
         },
         search: searchQuery,
@@ -56,12 +56,6 @@ export default new GraphQLObjectType({
                 const res: Array<any> = await MongoUser.find({});
                 console.log(res);
                 return res;
-            },
-        },
-        history: {
-            type: new GraphQLList(History),
-            resolve: () => {
-                return [];
             },
         },
     },

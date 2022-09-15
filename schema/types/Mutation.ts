@@ -19,7 +19,7 @@ export default new GraphQLObjectType({
         createBook: createBookMutation,
         updateBook: updateBookMutation,
         deleteBook: deleteBookMutation,
-        
+
         createLibrary: createLibraryMutation,
         updateLibrary: updateLibraryMutation,
         deleteLibrary: deleteLibraryMutation,
@@ -32,6 +32,6 @@ export default new GraphQLObjectType({
         unborrow: unborrowMutation,
 
         login: loginMutation,
-        register : registerMutation
+        register: registerMutation,
     },
 });

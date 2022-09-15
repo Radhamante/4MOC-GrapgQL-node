@@ -6,6 +6,7 @@ import {
 } from 'graphql';
 import MongoBook from '../mongo/MongoBook';
 import MongoUser from '../mongo/MongoUser';
+import idResolver from '../resolvers/id';
 import GraphQLDate from '../scalars/date';
 
 export default new GraphQLObjectType({
@@ -16,7 +17,7 @@ export default new GraphQLObjectType({
         return {
             id: {
                 type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id.toString(),
+                resolve: idResolver,
             },
             book: {
                 type: new GraphQLNonNull(Book),

@@ -6,10 +6,12 @@ import {
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
+import filterArg from '../args/filter';
 import bookGenre from '../enum/bookGenre';
 import MongoHistory from '../mongo/MongoHistory';
 import MongoLibrary from '../mongo/MongoLibrary';
 import MongoUser from '../mongo/MongoUser';
+import idResolver from '../resolvers/id';
 import GraphQLDate from '../scalars/date';
 
 export default new GraphQLObjectType({
@@ -21,7 +23,7 @@ export default new GraphQLObjectType({
         return {
             id: {
                 type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id.toString(),
+                resolve: idResolver,
             },
             isbn: { type: new GraphQLNonNull(GraphQLString) },
             title: { type: new GraphQLNonNull(GraphQLString) },
@@ -50,11 +52,15 @@ export default new GraphQLObjectType({
             history: {
                 type: new GraphQLNonNull(new GraphQLList(History)),
                 description: 'List of all previous borrows',
-                resolve: async (obj) => {
-                    const histos = await MongoHistory.find({
+                args: {
+                    filter: filterArg,
+                },
+                resolve: async (obj, arg: any) => {
+                    const histos: Array<any> = await MongoHistory.find({
                         book: obj._id,
-                    }).exec();
-                    console.log(histos);
+                    })
+                        .skip(arg.filter.start)
+                        .limit(arg.filter.count < 100 ? arg.filter.count : 100);
                     return histos;
                 },
             },

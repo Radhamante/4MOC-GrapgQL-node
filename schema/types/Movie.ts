@@ -8,6 +8,7 @@ import {
 } from 'graphql';
 import movieGenre from '../enum/movieGenre';
 import Borrowable from '../interfaces/Borrowable';
+import idResolver from '../resolvers/id';
 
 export default new GraphQLObjectType({
     name: 'Movie',
@@ -19,7 +20,7 @@ export default new GraphQLObjectType({
         return {
             id: {
                 type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id.toString(),
+                resolve: idResolver,
             },
             title: { type: new GraphQLNonNull(GraphQLString) },
             author: { type: GraphQLString },

@@ -5,6 +5,7 @@ import {
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
+import idResolver from '../resolvers/id';
 
 export default new GraphQLObjectType({
     name: 'Address',
@@ -12,7 +13,7 @@ export default new GraphQLObjectType({
         return {
             id: {
                 type: new GraphQLNonNull(GraphQLID),
-                resolve: (obj) => obj._id.toString(),
+                resolve: idResolver,
             },
             long: { type: new GraphQLNonNull(GraphQLFloat) },
             lat: { type: new GraphQLNonNull(GraphQLFloat) },

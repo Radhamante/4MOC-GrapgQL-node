@@ -1,4 +1,5 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
+import filterArg from '../args/filter';
 import filterInput from '../inputs/filterInput';
 import MongoBook from '../mongo/MongoBook';
 import MongoLibrary from '../mongo/MongoLibrary';
@@ -9,14 +10,7 @@ const searchQuery = {
     type: searchResultUnion,
     description: 'search for anything',
     args: {
-        filter: {
-            type: filterInput,
-            description: 'Filter values',
-            defaultValue: {
-                start: 0,
-                count: 20,
-            },
-        },
+        filter: filterArg,
         query: {
             type: new GraphQLNonNull(GraphQLString),
             description: "Query string"
