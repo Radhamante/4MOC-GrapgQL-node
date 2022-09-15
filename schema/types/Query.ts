@@ -6,6 +6,8 @@ import librarysQuery from "../queries/librarys";
 import movieQuery from "../queries/movie";
 import moviesQuery from "../queries/movies";
 import searchQuery from "../queries/search";
+import userQuery from "../queries/user";
+import usersQuery from "../queries/users";
 
 
 export default new GraphQLObjectType({
@@ -18,5 +20,7 @@ export default new GraphQLObjectType({
         library:libraryQuery,
         movies:moviesQuery,
         movie:movieQuery,
+        users:usersQuery,
+        user:userQuery
     },
 });
