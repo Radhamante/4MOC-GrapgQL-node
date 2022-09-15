@@ -2,7 +2,6 @@ import {
     GraphQLID,
     GraphQLNonNull,
     GraphQLObjectType,
-    GraphQLString,
 } from 'graphql';
 import MongoBook from '../mongo/MongoBook';
 import MongoUser from '../mongo/MongoUser';

@@ -1,16 +1,13 @@
 import {
     GraphQLID,
-    GraphQLList,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
 import MongoAdress from '../mongo/MongoAdress';
-import MongoBook from '../mongo/MongoBook';
 import booksQuery from '../queries/books';
 import idResolver from '../resolvers/id';
 import Address from './Address';
-import Book from './Book';
 
 export default new GraphQLObjectType({
     name: 'Library',

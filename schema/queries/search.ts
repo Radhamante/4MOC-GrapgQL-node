@@ -1,6 +1,5 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 import filterArg from '../args/filter';
-import filterInput from '../inputs/filterInput';
 import MongoBook from '../mongo/MongoBook';
 import MongoLibrary from '../mongo/MongoLibrary';
 import MongoUser from '../mongo/MongoUser';

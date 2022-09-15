@@ -1,15 +1,11 @@
 import {
-    GraphQLInputObjectType,
     GraphQLList,
     GraphQLNonNull,
-    GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 import bookGenre from '../../enum/bookGenre';
-import MongoBook from '../../mongo/MongoBook';
 import MongoLibrary from '../../mongo/MongoLibrary';
-import Book from '../../types/Book';
 import GraphQLDate from '../../scalars/date';
 import Movie from '../../types/Movie';
 import MongoMovie from '../../mongo/MongoMovie';

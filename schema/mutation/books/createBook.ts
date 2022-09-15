@@ -1,8 +1,6 @@
 import {
-    GraphQLInputObjectType,
     GraphQLList,
     GraphQLNonNull,
-    GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
@@ -11,10 +9,6 @@ import MongoBook from '../../mongo/MongoBook';
 import MongoLibrary from '../../mongo/MongoLibrary';
 import Book from '../../types/Book';
 import GraphQLDate from '../../scalars/date';
-import MongoUser from '../../mongo/MongoUser';
-import MongoAdress from '../../mongo/MongoAdress';
-import MongoHistory from '../../mongo/MongoHistory';
-import MongoMovie from '../../mongo/MongoMovie';
 
 const createBookMutation = mutationWithClientMutationId({
     name: 'createBook',
