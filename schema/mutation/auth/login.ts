@@ -5,6 +5,7 @@ import GraphQLEmail from '../../scalars/email';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET_KEY } from '../../../env';
+import User from '../../types/User';
 
 const loginMutation = mutationWithClientMutationId({
     name: 'login',
@@ -15,6 +16,7 @@ const loginMutation = mutationWithClientMutationId({
     },
     outputFields: {
         token: { type: GraphQLString },
+        user: { type: User },
     },
     mutateAndGetPayload: async (input) => {
         const session = await MongoUser.startSession();
@@ -38,6 +40,7 @@ const loginMutation = mutationWithClientMutationId({
                     JWT_SECRET_KEY,
                     { expiresIn: '1d' }
                 ),
+                user: user,
             };
         } catch (error) {
             console.log(error);
