@@ -29,18 +29,15 @@ const unborrowMutation = mutationWithClientMutationId({
             const historyToUpdate = await MongoHistory.findOneAndUpdate({book:input.book, user:input.user, endDate:null}, {
                 $set: { endDate: Date.now() },
             }).exec();
-            console.log(historyToUpdate)
             // const updatedHistory = await MongoHistory.updateOne({
             //     endDate: Date.now(),
             // });
             const updatedBook = await MongoBook.findByIdAndUpdate( input.book,{
                 $set: { borrower: null},
             }).exec();
-            console.log(updatedBook)
             const updateUser = await MongoUser.findByIdAndUpdate( input.user,{
                 $pull: {booksBorrowed: input.book},
             }).exec();
-            console.log(updateUser)
             return {history: historyToUpdate, book: updatedBook, user: updateUser}
         } catch (error) {
             console.log('########### error ##########');

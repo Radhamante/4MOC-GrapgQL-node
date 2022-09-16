@@ -29,15 +29,15 @@ const borrowMutation = mutationWithClientMutationId({
                 endDate: null,
             });
             console.log(createdHistory);
-            const user = await MongoUser.findByIdAndUpdate(input.user, {
+            const newBorrower = await MongoUser.findByIdAndUpdate(input.user, {
                 $push: { booksBorrowed: input.book },
             }).exec();
-            console.log(user);
-            const book = await MongoBook.findByIdAndUpdate(input.book, {
+            console.log(newBorrower);
+            const bookBorrowed = await MongoBook.findByIdAndUpdate(input.book, {
                 $set: { borrower: input.user },
             }).exec();
-            console.log(book);
-            return { history: createdHistory };
+            console.log(bookBorrowed);
+            return { history: createdHistory , user : newBorrower, book: bookBorrowed};
         } catch (error) {
             console.log('########### error ##########');
             console.log(error);
