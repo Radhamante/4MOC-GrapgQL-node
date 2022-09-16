@@ -37,7 +37,6 @@ const searchQuery = {
             .concat(resMovie)
             .concat(resLibrary)
             .concat(resUser)
-            .slice(arg.filter.start, arg.filter.end)
             .slice(arg.filter.start, arg.filter.count);
     },
 };
