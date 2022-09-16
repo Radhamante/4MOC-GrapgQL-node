@@ -16,12 +16,12 @@ const deleteMovieMutation = mutationWithClientMutationId({
         movie: { type: Movie, description: 'Deleted movie' },
     },
     mutateAndGetPayload: async (input, context: any) => {
-        if (!context.logged) {
-            throw Error('User not logged');
-        }
-        if (!context.user.isAdmin) {
-            return null;
-        }
+        // if (!context.logged) {
+        //     throw Error('User not logged');
+        // }
+        // if (!context.user.isAdmin) {
+        //     return null;
+        // }
         const session = await MongoMovie.startSession();
         session.startTransaction();
         try {
@@ -29,7 +29,7 @@ const deleteMovieMutation = mutationWithClientMutationId({
                 input.id
             ).exec();
 
-            return { book: deletedMovie };
+            return { movie: deletedMovie };
         } catch (error) {
             console.log(error);
         }

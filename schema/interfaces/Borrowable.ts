@@ -11,7 +11,7 @@ export default new GraphQLInterfaceType({
     name: 'Borrowable',
     fields: {
         userCanBorrow: {
-            type: new GraphQLNonNull(GraphQLBoolean),
+            type: GraphQLBoolean,
             description: 'User have right to borrow this',
         },
         borrower: {

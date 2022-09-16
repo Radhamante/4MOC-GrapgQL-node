@@ -16,7 +16,7 @@ export default new GraphQLUnionType({
         if (obj.books) {
             return 'Library';
         }
-        if (obj.isAdmin) {
+        if (obj.password) {
             return 'User';
         }
         return 'Movie';

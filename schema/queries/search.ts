@@ -26,6 +26,7 @@ const searchQuery = {
         const resMovie: Array<any> = await MongoMovie.find({
             title: { $regex: arg.query, $options: 'i' },
         });
+        console.log(resMovie)
         const resLibrary: Array<any> = await MongoLibrary.find({
             name: { $regex: arg.query, $options: 'i' },
         });

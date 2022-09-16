@@ -50,7 +50,7 @@ const updateMovieMutation = mutationWithClientMutationId({
             console.log('-------- createdBook --------');
             console.log(updatedMovie);
 
-            return { book: updatedMovie };
+            return { movie: updatedMovie };
         } catch (error) {
             console.log(error);
         }

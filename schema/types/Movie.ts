@@ -31,7 +31,7 @@ export default new GraphQLObjectType({
             genre: { type: new GraphQLNonNull(new GraphQLList(movieGenre)) },
             // From Borrowable
             userCanBorrow: {
-                type: new GraphQLNonNull(GraphQLBoolean),
+                type: GraphQLBoolean,
                 description: 'User have write to borrow this',
             },
             borrower: {
