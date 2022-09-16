@@ -7,17 +7,20 @@ const deleteMovieMutation = mutationWithClientMutationId({
     name: 'deleteMovie',
     description: 'delete a movie',
     inputFields: {
-        id: { type: new GraphQLNonNull(GraphQLString) },
+        id: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'Id of the movie to delete',
+        },
     },
     outputFields: {
-        movie: { type: Movie },
+        movie: { type: Movie, description: 'Deleted movie' },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {
-            throw Error("User not logged")
+            throw Error('User not logged');
         }
         if (!context.user.isAdmin) {
-            return null
+            return null;
         }
         const session = await MongoMovie.startSession();
         session.startTransaction();

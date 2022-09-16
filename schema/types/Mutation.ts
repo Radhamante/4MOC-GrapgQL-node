@@ -18,6 +18,7 @@ import deleteMovieMutation from '../mutation/movies/deleteMovie';
 
 export default new GraphQLObjectType({
     name: 'Mutation',
+    description: "All possible mutations",
     fields: {
         createBook: createBookMutation,
         updateBook: updateBookMutation,

@@ -6,6 +6,7 @@ import GraphQLDate from '../scalars/date';
 
 export default new GraphQLObjectType({
     name: 'History',
+    description: "An history",
     fields: () => {
         const Book = require('./Book').default;
         const User = require('./User').default;

@@ -2,7 +2,7 @@ import filterInput from "../inputs/filterInput"
 
 const filterArg = {
     type: filterInput,
-    description: 'Filter values',
+    description: 'Pagination filter',
     defaultValue: {
         start: 0,
         count: 20,

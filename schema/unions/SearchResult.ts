@@ -6,6 +6,7 @@ import User from '../types/User';
 
 export default new GraphQLUnionType({
     name: 'SearchResultUnion',
+    description: 'Result for search. Can be Book, Movie, Library, User',
     types: () => [Book, Movie, Library, User],
     resolveType: (obj) => {
         // return obj

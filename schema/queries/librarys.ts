@@ -5,6 +5,7 @@ import Library from '../types/Library';
 
 const librarysQuery = {
     type: new GraphQLList(Library),
+    description: "Query all library",
     args: {
         filter: filterArg,
         query: {

@@ -11,16 +11,19 @@ const updateMovieMutation = mutationWithClientMutationId({
     name: 'updateMovie',
     description: 'update a movie',
     inputFields: {
-        id: { type: new GraphQLNonNull(GraphQLString) },
-        title: { type: GraphQLString },
-        author: { type: GraphQLString },
-        date: { type: GraphQLDate },
-        idLibrary: { type: GraphQLString },
-        imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLList(new GraphQLList(movieGenre)) },
+        id: { type: new GraphQLNonNull(GraphQLString), description: "Id of the movie to update" },
+        title: { type: GraphQLString, description: "Movie's title" },
+        author: { type: GraphQLString, description: "Movie's author" },
+        date: { type: GraphQLDate, description: "Movie's date" },
+        idLibrary: { type: GraphQLString, description: "Movie's library" },
+        imageUrl: { type: GraphQLString, description: "Movie's imageUrl" },
+        genre: {
+            type: new GraphQLList(new GraphQLList(movieGenre)),
+            description: "Movie's genre",
+        },
     },
     outputFields: {
-        movie: { type: Movie },
+        movie: { type: Movie, description: "Updated movie" },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {

@@ -10,16 +10,31 @@ import User from '../../types/User';
 
 const registerMutation = mutationWithClientMutationId({
     name: 'register',
-    description: 'register',
+    description: 'Register a new account',
     inputFields: {
-        name: { type: new GraphQLNonNull(GraphQLString)! },
-        email: { type: new GraphQLNonNull(GraphQLEmail) },
-        password: { type: new GraphQLNonNull(GraphQLString) },
-        gender: { type: new GraphQLNonNull(userGender) },
+        name: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'New user name',
+        },
+        email: {
+            type: new GraphQLNonNull(GraphQLEmail),
+            description: 'New user email',
+        },
+        password: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'New user password',
+        },
+        gender: {
+            type: new GraphQLNonNull(userGender),
+            description: 'New user gender',
+        },
     },
     outputFields: {
-        token: { type: GraphQLString },
-        user: { type: User },
+        token: {
+            type: GraphQLString,
+            description: "JWT token to save in 'autorization' header",
+        },
+        user: { type: User, description: 'Created user' },
     },
     mutateAndGetPayload: async (input) => {
         const session = await MongoUser.startSession();

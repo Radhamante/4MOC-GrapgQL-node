@@ -11,6 +11,7 @@ import usersQuery from '../queries/users';
 
 export default new GraphQLObjectType({
     name: 'Query',
+    description: "All possible querys",
     fields: {
         search: searchQuery,
         books: booksQuery,

@@ -5,6 +5,7 @@ import Movie from '../types/Movie';
 
 const moviesQuery = {
     type: new GraphQLNonNull(new GraphQLList(Movie)),
+    description: "Query all movie",
     args: {
         filter: filterArg,
         query: {

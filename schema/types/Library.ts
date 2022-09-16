@@ -11,6 +11,7 @@ import Address from './Address';
 
 export default new GraphQLObjectType({
     name: 'Library',
+    description: "A library",
     fields: () => {
         return {
             id: {

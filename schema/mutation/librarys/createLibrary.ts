@@ -11,10 +11,11 @@ import MongoAdress from '../../mongo/MongoAdress';
 
 const LibraryAddressInput = new GraphQLInputObjectType({
     name: 'LibraryInputMutation',
+    description: "Address informations",
     fields: {
-        long: { type: new GraphQLNonNull(GraphQLFloat) },
-        lat: { type: new GraphQLNonNull(GraphQLFloat) },
-        name: { type: GraphQLString },
+        long: { type: new GraphQLNonNull(GraphQLFloat), description: "Longitude"},
+        lat: { type: new GraphQLNonNull(GraphQLFloat), description: "Latitude"},
+        name: { type: GraphQLString, description: "Address name"},
     },
 });
 

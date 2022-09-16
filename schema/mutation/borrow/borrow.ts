@@ -3,17 +3,33 @@ import { mutationWithClientMutationId } from 'graphql-relay';
 import MongoBook from '../../mongo/MongoBook';
 import MongoHistory from '../../mongo/MongoHistory';
 import MongoUser from '../../mongo/MongoUser';
+import Book from '../../types/Book';
 import History from '../../types/History';
+import User from '../../types/User';
 
 const borrowMutation = mutationWithClientMutationId({
     name: 'borrow',
     description: 'borrow a book by a user',
     inputFields: {
-        book: { type: new GraphQLNonNull(GraphQLString) },
-        user: { type: new GraphQLNonNull(GraphQLString) },
+        book: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'ID of the book to borrow',
+        },
+        user: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'ID of the user that borrow',
+        },
     },
     outputFields: {
-        history: { type: new GraphQLNonNull(History) },
+        history: {
+            type: new GraphQLNonNull(History),
+            description: 'History value created',
+        },
+        book: { type: new GraphQLNonNull(Book), description: 'Book borrowed' },
+        user: {
+            type: new GraphQLNonNull(User),
+            description: 'User that borrowed',
+        },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {

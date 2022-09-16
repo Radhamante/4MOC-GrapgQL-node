@@ -2,7 +2,7 @@ import { GraphQLEnumType } from 'graphql';
 
 export default new GraphQLEnumType({
     name: 'movieGenre',
-    description: 'The possible genre for a movie',
+    description: 'Every movie genre',
     values: {
         THRILLER: {
             value: 'THRILLER',

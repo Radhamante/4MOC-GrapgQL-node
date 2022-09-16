@@ -7,10 +7,13 @@ const deleteBookMutation = mutationWithClientMutationId({
     name: 'deleteBook',
     description: 'delete a book',
     inputFields: {
-        id: { type: new GraphQLNonNull(GraphQLString) },
+        id: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Book's ID",
+        },
     },
     outputFields: {
-        book: { type: Book },
+        book: { type: Book, description: 'Deleted book' },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {

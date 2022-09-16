@@ -2,6 +2,7 @@ import { GraphQLInputObjectType, GraphQLInt } from 'graphql';
 
 const filterInput = new GraphQLInputObjectType({
     name: 'filter',
+    description: "Pagination values",
     fields: {
         start: {
             type: GraphQLInt,
@@ -11,7 +12,7 @@ const filterInput = new GraphQLInputObjectType({
         count: {
             type: GraphQLInt,
             defaultValue: 20,
-            description: 'Number of element needed after the first one',
+            description: 'Number of element needed after start',
         },
     },
 });

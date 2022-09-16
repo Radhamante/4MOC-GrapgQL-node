@@ -1,8 +1,4 @@
-import {
-    GraphQLList,
-    GraphQLNonNull,
-    GraphQLString,
-} from 'graphql';
+import { GraphQLList, GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 import MongoLibrary from '../../mongo/MongoLibrary';
 import GraphQLDate from '../../scalars/date';
@@ -14,24 +10,36 @@ const createMovieMutation = mutationWithClientMutationId({
     name: 'createMovie',
     description: 'Create a movie',
     inputFields: {
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        author: { type: GraphQLString },
-        date: { type: new GraphQLNonNull(GraphQLDate) },
-        idLibrary: { type: new GraphQLNonNull(GraphQLString) },
-        imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLNonNull(new GraphQLList(movieGenre)) },
+        title: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Movie's title",
+        },
+        author: { type: GraphQLString, description: "Movie's author" },
+        date: {
+            type: new GraphQLNonNull(GraphQLDate),
+            description: "Movie's date",
+        },
+        idLibrary: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Movie's library id",
+        },
+        imageUrl: { type: GraphQLString, description: "Movie's imageUrl" },
+        genre: {
+            type: new GraphQLNonNull(new GraphQLList(movieGenre)),
+            description: "Movie's genre",
+        },
     },
     outputFields: {
-        movie: { type: Movie },
+        movie: { type: Movie, description: 'Created movie' },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {
-            throw Error("User not logged")
+            throw Error('User not logged');
         }
         if (!context.user.isAdmin) {
-            return null
+            return null;
         }
-        console.log("test")
+        console.log('test');
         const session = await MongoMovie.startSession();
         session.startTransaction();
         try {

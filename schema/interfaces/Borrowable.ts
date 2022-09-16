@@ -12,7 +12,7 @@ export default new GraphQLInterfaceType({
     fields: {
         userCanBorrow: {
             type: new GraphQLNonNull(GraphQLBoolean),
-            description: 'User have write to borrow this',
+            description: 'User have right to borrow this',
         },
         borrower: {
             type: User,

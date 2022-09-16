@@ -5,6 +5,7 @@ import Book from '../types/Book';
 
 const booksQuery = {
     type: new GraphQLNonNull(new GraphQLList(Book)),
+    description: "Query all books",
     args: {
         filter: filterArg,
         query: {

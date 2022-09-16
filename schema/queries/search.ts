@@ -8,7 +8,7 @@ import searchResultUnion from '../unions/SearchResult';
 
 const searchQuery = {
     type: new GraphQLNonNull(new GraphQLList(searchResultUnion)),
-    description: 'search for anything',
+    description: 'Search for a book, movie, user or library',
     args: {
         filter: filterArg,
         query: {

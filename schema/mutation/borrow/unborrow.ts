@@ -11,13 +11,28 @@ const unborrowMutation = mutationWithClientMutationId({
     name: 'unborrow',
     description: 'unborrow a book by a user',
     inputFields: {
-        book: { type: new GraphQLNonNull(GraphQLString) },
-        user: { type: new GraphQLNonNull(GraphQLString) },
+        book: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'ID of the book to borrow',
+        },
+        user: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: 'ID of the user that borrow',
+        },
     },
     outputFields: {
-        history: { type: new GraphQLNonNull(History) },
-        book: { type: new GraphQLNonNull(Book) },
-        user: { type: new GraphQLNonNull(User) },
+        history: {
+            type: new GraphQLNonNull(History),
+            description: 'History value updated',
+        },
+        book: {
+            type: new GraphQLNonNull(Book),
+            description: 'Book unborrowed',
+        },
+        user: {
+            type: new GraphQLNonNull(User),
+            description: 'User that unborrowed',
+        },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {

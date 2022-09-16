@@ -16,6 +16,7 @@ import History from './History';
 
 export default new GraphQLObjectType({
     name: 'User',
+    description: 'A user',
     fields: () => {
         return {
             id: { type: GraphQLID, resolve: idResolver },

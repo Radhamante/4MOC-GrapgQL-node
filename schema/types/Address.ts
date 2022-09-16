@@ -9,6 +9,7 @@ import idResolver from '../resolvers/id';
 
 export default new GraphQLObjectType({
     name: 'Address',
+    description: "An address",
     fields: () => {
         return {
             id: {

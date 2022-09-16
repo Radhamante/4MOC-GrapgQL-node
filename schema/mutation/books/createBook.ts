@@ -10,16 +10,31 @@ const createBookMutation = mutationWithClientMutationId({
     name: 'createBook',
     description: 'Create a book',
     inputFields: {
-        isbn: { type: new GraphQLNonNull(GraphQLString) },
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        author: { type: GraphQLString },
-        date: { type: new GraphQLNonNull(GraphQLDate) },
-        idLibrary: { type: new GraphQLNonNull(GraphQLString) },
-        imageUrl: { type: GraphQLString },
-        genre: { type: new GraphQLNonNull(new GraphQLList(bookGenre)) },
+        isbn: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Book's isbn",
+        },
+        title: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Book's title",
+        },
+        author: { type: GraphQLString, description: "Book's author" },
+        date: {
+            type: new GraphQLNonNull(GraphQLDate),
+            description: "Book's date",
+        },
+        idLibrary: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Book's library id",
+        },
+        imageUrl: { type: GraphQLString, description: "Book's imageUrl" },
+        genre: {
+            type: new GraphQLNonNull(new GraphQLList(bookGenre)),
+            description: "Book's genre",
+        },
     },
     outputFields: {
-        book: { type: Book },
+        book: { type: Book, description: 'Created book' },
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {

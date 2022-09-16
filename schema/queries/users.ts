@@ -5,6 +5,7 @@ import Users from '../types/User';
 
 const usersQuery = {
     type: new GraphQLNonNull(new GraphQLList(Users)),
+    description: "Query all users",
     args: {
         filter: filterArg,
         query: {

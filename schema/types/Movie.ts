@@ -12,6 +12,7 @@ import idResolver from '../resolvers/id';
 
 export default new GraphQLObjectType({
     name: 'Movie',
+    description: "A movie",
     interfaces: () => [Borrowable],
     fields: () => {
         const User = require('./User').default;
