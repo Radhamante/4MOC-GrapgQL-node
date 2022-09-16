@@ -25,12 +25,12 @@ const createMovieMutation = mutationWithClientMutationId({
         movie: { type: Movie },
     },
     mutateAndGetPayload: async (input, context: any) => {
-        // if (!context.logged) {
-        //     throw Error("User not logged")
-        // }
-        // if (!context.user.isAdmin) {
-        //     return null
-        // }
+        if (!context.logged) {
+            throw Error("User not logged")
+        }
+        if (!context.user.isAdmin) {
+            return null
+        }
         console.log("test")
         const session = await MongoMovie.startSession();
         session.startTransaction();
