@@ -1,8 +1,4 @@
-import {
-    GraphQLList,
-    GraphQLNonNull,
-    GraphQLString,
-} from 'graphql';
+import { GraphQLList, GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 import bookGenre from '../../enum/bookGenre';
 import MongoBook from '../../mongo/MongoBook';
@@ -28,10 +24,10 @@ const updateBookMutation = mutationWithClientMutationId({
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {
-            throw Error("User not logged")
+            throw Error('User not logged');
         }
         if (!context.user.isAdmin) {
-            return null
+            return null;
         }
         const session = await MongoBook.startSession();
         session.startTransaction();

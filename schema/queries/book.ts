@@ -15,9 +15,11 @@ const bookQuery = {
         if (!context.logged) {
             throw Error('User not logged');
         }
-        const res = await MongoBook.findById(arg.id).exec();
-        console.log(res)
-        return res;
+        const resBook: any = await MongoBook.findById(arg.id).exec();
+        if (resBook) {
+            resBook.userCanBorrow = true;
+        }
+        return resBook;
     },
 };
 

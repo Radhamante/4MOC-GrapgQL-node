@@ -1,4 +1,4 @@
-import { GraphQLInputObjectType, GraphQLInt } from "graphql";
+import { GraphQLInputObjectType, GraphQLInt } from 'graphql';
 
 const filterInput = new GraphQLInputObjectType({
     name: 'filter',
@@ -16,4 +16,4 @@ const filterInput = new GraphQLInputObjectType({
     },
 });
 
-export default filterInput
+export default filterInput;

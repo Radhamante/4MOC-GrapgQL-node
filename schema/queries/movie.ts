@@ -9,15 +9,17 @@ const movieQuery = {
         id: {
             type: new GraphQLNonNull(GraphQLString),
             description: 'ID of the movie',
-        }
+        },
     },
     resolve: async (obj: any, arg: any, context: any) => {
         if (!context.logged) {
             throw Error('User not logged');
         }
-        const res = await MongoMovie.findById(arg.id).exec();
-        console.log(res)
-        return res;
+        const resMovie: any = await MongoMovie.findById(arg.id).exec();
+        if (resMovie) {
+            resMovie.userCanBorrow = true;
+        }
+        return resMovie;
     },
 };
 

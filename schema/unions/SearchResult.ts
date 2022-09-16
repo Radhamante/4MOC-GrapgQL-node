@@ -10,14 +10,14 @@ export default new GraphQLUnionType({
     resolveType: (obj) => {
         // return obj
         if (obj.isbn) {
-            return "Book";
+            return 'Book';
         }
         if (obj.books) {
-            return "Library";
+            return 'Library';
         }
         if (obj.isAdmin) {
-            return "User";
+            return 'User';
         }
-        return "Movie";
+        return 'Movie';
     },
 });

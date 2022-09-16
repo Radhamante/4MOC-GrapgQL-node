@@ -9,14 +9,14 @@ const libraryQuery = {
         id: {
             type: new GraphQLNonNull(GraphQLString),
             description: 'ID of the library',
-        }
+        },
     },
     resolve: async (obj: any, arg: any, context: any) => {
         if (!context.logged) {
             throw Error('User not logged');
         }
         const res = await MongoLibrary.findById(arg.id).exec();
-        console.log(res)
+        console.log(res);
         return res;
     },
 };

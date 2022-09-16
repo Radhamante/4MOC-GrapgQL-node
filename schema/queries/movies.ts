@@ -16,12 +16,13 @@ const moviesQuery = {
         if (!context.logged) {
             throw Error('User not logged');
         }
-        const res: Array<any> = await MongoMovie.find(
+        const resMovies: Array<any> = await MongoMovie.find(
             arg.query ? { title: { $regex: arg.query, $options: 'i' } } : {}
         )
-            .skip(arg.filter.start) 
+            .skip(arg.filter.start)
             .limit(arg.filter.count < 100 ? arg.filter.count : 100);
-        return res;
+        resMovies.forEach((movie) => (movie.userCanBorrow = true));
+        return resMovies;
     },
 };
 

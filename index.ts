@@ -7,28 +7,28 @@ import { JWT_SECRET_KEY } from './env';
 import MongoUser from './schema/mongo/MongoUser';
 
 const buildContext = async (req: any) => {
-    const headersAuthorization = req.headers.authorization
+    const headersAuthorization = req.headers.authorization;
     let context = {
         user: {},
-        logged: false
-    }
-    if(headersAuthorization) {
+        logged: false,
+    };
+    if (headersAuthorization) {
         try {
             const token: any = jwt.verify(headersAuthorization, JWT_SECRET_KEY);
-            const user = await MongoUser.find({email:(token.email)}).exec()
-            context.user = user
-            context.logged = true
+            const user = await MongoUser.find({ email: token.email }).exec();
+            context.user = user;
+            context.logged = true;
         } catch (e) {
             return null;
         }
     }
-    return context
-}
+    return context;
+};
 
 const DefaultQuery = `query DefaultQuery {}`;
 var app = express();
 app.use(
-    '/graphql', 
+    '/graphql',
     graphqlHTTP(async (req) => ({
         schema: schema,
         context: await buildContext(req),

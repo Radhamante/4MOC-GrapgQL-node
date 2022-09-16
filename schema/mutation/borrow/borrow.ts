@@ -37,7 +37,11 @@ const borrowMutation = mutationWithClientMutationId({
                 $set: { borrower: input.user },
             }).exec();
             console.log(bookBorrowed);
-            return { history: createdHistory , user : newBorrower, book: bookBorrowed};
+            return {
+                history: createdHistory,
+                user: newBorrower,
+                book: bookBorrowed,
+            };
         } catch (error) {
             console.log('########### error ##########');
             console.log(error);

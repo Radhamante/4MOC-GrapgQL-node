@@ -16,12 +16,13 @@ const booksQuery = {
         if (!context.logged) {
             throw Error('User not logged');
         }
-        const res: Array<any> = await MongoBook.find(
+        const resBooks: Array<any> = await MongoBook.find(
             arg.query ? { title: { $regex: arg.query, $options: 'i' } } : {}
         )
             .skip(arg.filter.start)
             .limit(arg.filter.count < 100 ? arg.filter.count : 100);
-        return res;
+        resBooks.forEach((book) => (book.userCanBorrow = true));
+        return resBooks;
     },
 };
 

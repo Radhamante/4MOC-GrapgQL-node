@@ -1,8 +1,4 @@
-import {
-    GraphQLID,
-    GraphQLNonNull,
-    GraphQLObjectType,
-} from 'graphql';
+import { GraphQLID, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import MongoBook from '../mongo/MongoBook';
 import MongoUser from '../mongo/MongoUser';
 import idResolver from '../resolvers/id';

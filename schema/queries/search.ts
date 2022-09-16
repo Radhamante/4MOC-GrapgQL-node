@@ -10,7 +10,7 @@ const searchQuery = {
     type: new GraphQLNonNull(new GraphQLList(searchResultUnion)),
     description: 'search for anything',
     args: {
-        filter: (filterArg),
+        filter: filterArg,
         query: {
             type: new GraphQLNonNull(GraphQLString),
             description: 'Query string',
@@ -32,6 +32,9 @@ const searchQuery = {
         const resUser: Array<any> = await MongoUser.find({
             name: { $regex: arg.query, $options: 'i' },
         });
+
+        resBook.forEach((book) => (book.userCanBorrow = true));
+        resMovie.forEach((movie) => (movie.userCanBorrow = true));
 
         return resBook
             .concat(resMovie)

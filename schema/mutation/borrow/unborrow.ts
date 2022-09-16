@@ -26,24 +26,31 @@ const unborrowMutation = mutationWithClientMutationId({
         const session = await MongoUser.startSession();
         session.startTransaction();
         try {
-            const historyToUpdate = await MongoHistory.findOneAndUpdate({book:input.book, user:input.user, endDate:null}, {
-                $set: { endDate: Date.now() },
-            }).exec();
+            const historyToUpdate = await MongoHistory.findOneAndUpdate(
+                { book: input.book, user: input.user, endDate: null },
+                {
+                    $set: { endDate: Date.now() },
+                }
+            ).exec();
             // const updatedHistory = await MongoHistory.updateOne({
             //     endDate: Date.now(),
             // });
-            const updatedBook = await MongoBook.findByIdAndUpdate( input.book,{
-                $set: { borrower: null},
+            const updatedBook = await MongoBook.findByIdAndUpdate(input.book, {
+                $set: { borrower: null },
             }).exec();
-            const updateUser = await MongoUser.findByIdAndUpdate( input.user,{
-                $pull: {booksBorrowed: input.book},
+            const updateUser = await MongoUser.findByIdAndUpdate(input.user, {
+                $pull: { booksBorrowed: input.book },
             }).exec();
-            return {history: historyToUpdate, book: updatedBook, user: updateUser}
+            return {
+                history: historyToUpdate,
+                book: updatedBook,
+                user: updateUser,
+            };
         } catch (error) {
             console.log('########### error ##########');
             console.log(error);
         }
-    
+
         await session.commitTransaction();
         session.endSession();
         return null;

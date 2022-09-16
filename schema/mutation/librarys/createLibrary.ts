@@ -30,10 +30,10 @@ const createLibraryMutation = mutationWithClientMutationId({
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {
-            throw Error("User not logged")
+            throw Error('User not logged');
         }
         if (!context.user.isAdmin) {
-            return null
+            return null;
         }
         const session = await MongoLibrary.startSession();
         session.startTransaction();

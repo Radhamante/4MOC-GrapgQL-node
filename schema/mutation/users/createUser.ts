@@ -1,8 +1,4 @@
-import {
-    GraphQLBoolean,
-    GraphQLNonNull,
-    GraphQLString,
-} from 'graphql';
+import { GraphQLBoolean, GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 import MongoUser from '../../mongo/MongoUser';
 import userGender from '../../enum/userGender';
@@ -25,10 +21,10 @@ const createUserMutation = mutationWithClientMutationId({
     },
     mutateAndGetPayload: async (input, context: any) => {
         if (!context.logged) {
-            throw Error("User not logged")
+            throw Error('User not logged');
         }
         if (!context.user.isAdmin) {
-            return null
+            return null;
         }
         const session = await MongoUser.startSession();
         session.startTransaction();
